@@ -6,7 +6,14 @@ namespace ArrayDemo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ArrayV1 arrayV1 = new ArrayV1(20);
+            for (int i = 0; i < 10; i++)
+            {
+                arrayV1.AddLast(i);
+            }
+            Console.WriteLine(arrayV1);
+
+            Console.ReadKey();
         }
     }
 }
