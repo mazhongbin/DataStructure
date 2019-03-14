@@ -3,12 +3,12 @@ using System.Text;
 
 namespace ArrayDemo
 {
-    public class ArrayV1
+    public class ArrayV1<T>
     {
         /// <summary>
         /// 数组
         /// </summary>
-        private int[] data;
+        private T[] data;
 
         /// <summary>
         /// 大小
@@ -21,7 +21,7 @@ namespace ArrayDemo
         /// <param name="capatity"></param>
         public ArrayV1(int capatity)
         {
-            data = new int[capatity];
+            data = new T[capatity];
             size = 0;
         }
 
@@ -59,12 +59,12 @@ namespace ArrayDemo
             return data.Length == 0;
         }
 
-        public void AddLast(int e)
+        public void AddLast(T e)
         {
             Add(size, e);
         }
 
-        public void AddFirst(int e)
+        public void AddFirst(T e)
         {
             Add(0, e);
         }
@@ -74,12 +74,12 @@ namespace ArrayDemo
         /// </summary>
         /// <param name="index"></param>
         /// <param name="e"></param>
-        public void Add(int index, int e)
+        public void Add(int index, T e)
         {
-            if (size == data.Length)
-                throw new ArgumentOutOfRangeException("add failure, array is full");
             if (index < 0 || index > size)
                 throw new ArgumentOutOfRangeException("index is out of range");
+            if (size == data.Length)
+                Resize(2 * data.Length);
             for (int i = size - 1; i > index; i--)
                 data[i + 1] = data[i];
             data[index] = e;
@@ -87,11 +87,23 @@ namespace ArrayDemo
         }
 
         /// <summary>
+        /// 扩容为原来的2倍
+        /// </summary>
+        /// <param name="v"></param>
+        private void Resize(int capacity)
+        {
+            T[] newData = new T[capacity];
+            for (int i = 0; i < size; i++)
+                newData[i] = data[i];
+            data = newData;
+        }
+
+        /// <summary>
         /// 获取某个元素
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public int Get(int index)
+        public T Get(int index)
         {
             if (index < 0 || index >= size)
                 throw new ArgumentOutOfRangeException("out of range");
@@ -103,7 +115,7 @@ namespace ArrayDemo
         /// </summary>
         /// <param name="index"></param>
         /// <param name="e"></param>
-        public void Set(int index,int e)
+        public void Set(int index, T e)
         {
             if (index < 0 || index >= size)
                 throw new ArgumentOutOfRangeException("out of range");
@@ -115,11 +127,11 @@ namespace ArrayDemo
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public Boolean Contains(int e)
+        public Boolean Contains(T e)
         {
             for (int i = 0; i < size; i++)
             {
-                if (data[i] == e)
+                if (data[i].Equals(e))
                     return true;
             }
             return false;
@@ -130,16 +142,65 @@ namespace ArrayDemo
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public int Find(int e)
+        public int Find(T e)
         {
             for (int i = 0; i < size; i++)
             {
-                if (data[i] == e)
+                if (data[i].Equals(e))
                     return i;
             }
             return -1;
         }
 
+        /// <summary>
+        /// 移除某个元素
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public T Remove(int index)
+        {
+            if (index < 0 || index >= size)
+                throw new ArgumentOutOfRangeException("out of range");
+            T ret = data[index];
+            for (int i = index; i < size; i++)
+            {
+                data[i - 1] = data[i];
+            }
+            size--;
+            data[size] = default(T);//loitering object
+            if (size == data.Length / 4)
+                Resize(data.Length / 2);
+            return ret;
+        }
+
+        /// <summary>
+        /// 移除第一个元素
+        /// </summary>
+        /// <returns></returns>
+        public T RemoveFirst()
+        {
+            return Remove(0);
+        }
+
+        /// <summary>
+        /// 移除最后一个元素
+        /// </summary>
+        /// <returns></returns>
+        public T RemoveLast()
+        {
+            return Remove(size - 1);
+        }
+
+        /// <summary>
+        /// 如果有就移除该元素
+        /// </summary>
+        /// <param name="e"></param>
+        public void RemoveElement(T e)
+        {
+            int index = Find(e);
+            if (index != -1)
+                Remove(index);
+        }
 
         public override string ToString()
         {
