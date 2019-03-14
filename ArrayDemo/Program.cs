@@ -33,12 +33,24 @@ namespace ArrayDemo
 
             #endregion
 
+            #region 自定义类测试
             ArrayV1<Student> arr = new ArrayV1<Student>();
-            arr.AddLast(new Student( "ma", 100 ));
+            arr.AddLast(new Student("ma", 100));
             arr.AddLast(new Student("song", 90));
             arr.AddLast(new Student("bo", 80));
 
             Console.WriteLine(arr);
+            #endregion
+
+            IStack<Int32> stack = new ArrayStack<Int32>();
+            for (int i = 0; i < 5; i++)
+            {
+                stack.Push(i);
+                Console.WriteLine(stack);
+            }
+
+            stack.Pop();
+            Console.WriteLine(stack);
 
             Console.ReadKey();
         }

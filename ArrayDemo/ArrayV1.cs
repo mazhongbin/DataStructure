@@ -111,6 +111,24 @@ namespace ArrayDemo
         }
 
         /// <summary>
+        /// 获取最后一个元素
+        /// </summary>
+        /// <returns></returns>
+        public T GetLast()
+        {
+            return Get(size - 1);
+        }
+
+        /// <summary>
+        /// 获取第一个元素
+        /// </summary>
+        /// <returns></returns>
+        public T GetFirst()
+        {
+            return Get(0);
+        }
+
+        /// <summary>
         /// 设置某个元素的值
         /// </summary>
         /// <param name="index"></param>
@@ -168,7 +186,7 @@ namespace ArrayDemo
             }
             size--;
             data[size] = default(T);//loitering object
-            if (size == data.Length / 4)
+            if (size == data.Length / 4 && data.Length / 2 != 0)
                 Resize(data.Length / 2);
             return ret;
         }
