@@ -64,6 +64,18 @@ namespace ArrayDemo
                 }
             }
 
+            LoopQueue<int> lqueue = new LoopQueue<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                lqueue.Enqueue(i);
+                Console.WriteLine(lqueue);
+                if (i % 3 == 2)
+                {
+                    lqueue.Dequeue();
+                    Console.WriteLine(lqueue);
+                }
+            }
+
 
             Console.ReadKey();
         }

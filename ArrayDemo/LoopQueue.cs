@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ArrayDemo
@@ -18,7 +17,7 @@ namespace ArrayDemo
             size = 0;
         }
 
-        public LoopQueue():this(10)
+        public LoopQueue() : this(10)
         {
         }
 
@@ -29,7 +28,17 @@ namespace ArrayDemo
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            if (IsEmpty())
+            {
+                throw new ArgumentOutOfRangeException("Empty");
+            }
+            T ret = data[front];
+            data[front] = default(T);
+            front++;
+            size--;
+            if (size == GetCapacity() / 4 && GetCapacity() != 0)
+                Resize(GetCapacity() / 2);
+            return ret;
         }
 
         public void Enqueue(T t)
@@ -38,6 +47,9 @@ namespace ArrayDemo
             {
                 Resize(GetCapacity() + 1);
             }
+            data[tail] = t;
+            tail = (tail + 1) % data.Length;
+            size++;
         }
 
         private void Resize(int newCapacity)
@@ -47,21 +59,43 @@ namespace ArrayDemo
             {
                 newData[i] = data[(i + front) % data.Length];
             }
+            data = newData;
+            front = 0;
+            tail = size;
         }
 
         public T GetFront()
         {
-            throw new NotImplementedException();
+            if (IsEmpty())
+            {
+                throw new ArgumentOutOfRangeException("Empty");
+            }
+            return data[front];
         }
 
         public int GetSize()
         {
-            throw new NotImplementedException();
+            return size;
         }
 
         public bool IsEmpty()
         {
-            throw new NotImplementedException();
+            return front == tail;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder res = new StringBuilder();
+            res.Append("LoopQueue: ");
+            res.Append("front [");
+            for (int i = front; i != tail; i = (i + 1) % data.Length)
+            {
+                res.Append(data[i]);
+                if ((i + 1) % data.Length != tail)
+                    res.Append(",");
+            }
+            res.Append("] tail");
+            return res.ToString();
         }
     }
 }
