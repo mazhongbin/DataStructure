@@ -52,6 +52,19 @@ namespace ArrayDemo
             stack.Pop();
             Console.WriteLine(stack);
 
+            ArrayQueue<int> queue = new ArrayQueue<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                queue.Enqueue(i);
+                Console.WriteLine(queue);
+                if (i % 3 == 2)
+                {
+                    queue.Dequeue();
+                    Console.WriteLine(queue);
+                }
+            }
+
+
             Console.ReadKey();
         }
     }

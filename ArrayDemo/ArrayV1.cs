@@ -54,7 +54,7 @@ namespace ArrayDemo
         /// ÊÇ·ñÎª¿Õ
         /// </summary>
         /// <returns></returns>
-        public Boolean IsEnpty()
+        public Boolean IsEmpty()
         {
             return data.Length == 0;
         }
@@ -182,7 +182,7 @@ namespace ArrayDemo
             T ret = data[index];
             for (int i = index; i < size; i++)
             {
-                data[i - 1] = data[i];
+                data[i] = data[i+1];
             }
             size--;
             data[size] = default(T);//loitering object

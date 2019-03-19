@@ -4,18 +4,33 @@ using System.Text;
 
 namespace ArrayDemo
 {
-    public class ArrayStack<T> : IStack<T>
+    public class ArrayQueue<T> : IQueue<T>
     {
         private ArrayV1<T> array;
 
-        public ArrayStack(int capacity)
+        public ArrayQueue()
+        {
+            array = new ArrayV1<T>(20);
+        }
+
+        public ArrayQueue(int capacity)
         {
             array = new ArrayV1<T>(capacity);
         }
 
-        public ArrayStack()
+        public T Dequeue()
         {
-            array = new ArrayV1<T>();
+            return array.RemoveFirst();
+        }
+
+        public void Enqueue(T e)
+        {
+            array.AddLast(e);
+        }
+
+        public T GetFront()
+        {
+            return array.GetFirst();
         }
 
         public int GetSize()
@@ -28,33 +43,23 @@ namespace ArrayDemo
             return array.IsEmpty();
         }
 
-        public T Peek()
+        public int GetCapacity()
         {
-            return array.GetLast();
-        }
-
-        public T Pop()
-        {
-            return array.RemoveLast();
-        }
-
-        public void Push(T e)
-        {
-            array.AddLast(e);
+            return array.GetCapacity();
         }
 
         public override string ToString()
         {
             StringBuilder res = new StringBuilder();
-            res.Append("Stack: ");
-            res.Append("[");
+            res.Append("Queue: ");
+            res.Append("front [");
             for (int i = 0; i < array.GetSize(); i++)
             {
                 res.Append(array.Get(i));
                 if (i != array.GetSize() - 1)
                     res.Append(",");
             }
-            res.Append("] top");
+            res.Append("] tail");
             return res.ToString();
         }
     }
