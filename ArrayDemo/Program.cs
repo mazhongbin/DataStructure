@@ -76,6 +76,43 @@ namespace ArrayDemo
                 }
             }
 
+            LinkedList<int> linkedList = new LinkedList<int>();
+            for (int i = 0; i < 5; i++)
+            {
+                linkedList.AddFirst(i);
+                Console.WriteLine(linkedList);
+            }
+            linkedList.Add(2, 777);
+            Console.WriteLine(linkedList);
+
+            linkedList.RemoveFirst();
+            Console.WriteLine(linkedList);
+
+            linkedList.Remove(3);
+            Console.WriteLine(linkedList);
+
+            IStack<Int32> linkStack = new LinkedListStack<Int32>();
+            for (int i = 0; i < 5; i++)
+            {
+                linkStack.Push(i);
+                Console.WriteLine(linkStack);
+            }
+
+            linkStack.Pop();
+            Console.WriteLine(linkStack);
+
+
+            LinkedListQueue<int> linkedListQueue = new LinkedListQueue<int>();
+            for (int i = 0; i < 10; i++)
+            {
+                linkedListQueue.Enqueue(i);
+                Console.WriteLine(linkedListQueue);
+                if (i % 3 == 2)
+                {
+                    linkedListQueue.Dequeue();
+                    Console.WriteLine(linkedListQueue);
+                }
+            }
 
             Console.ReadKey();
         }
